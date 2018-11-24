@@ -15,8 +15,8 @@ import java.util.logging.Logger;
         name = "greeting.card.producer",
         immediate = true
 )
-public class GreedingCardProducerServiceComponent {
-    private static final Logger LOGGER = Logger.getLogger(GreedingCardProducerServiceComponent.class.getName());
+public class GreetingCardProducerServiceComponent {
+    private static final Logger LOGGER = Logger.getLogger(GreetingCardProducerServiceComponent.class.getName());
 
     @Activate
     protected void activate(ComponentContext context) {
