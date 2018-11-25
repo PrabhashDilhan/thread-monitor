@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1543060181208
+Bnd-LastModified: 1543064524563
 Build-Jdk: 1.8.0_181
 Built-By: anuradha
 Bundle-ManifestVersion: 2
@@ -13,5 +13,5 @@ Export-Package: org.wso2.carbon.greeting.card.producer;version="1.0.0.SN
 Import-Package: org.osgi.framework;version="[1.7.0,2.0.0)",org.osgi.serv
  ice.component;version="[1.2.0,2.0.0)"
 Service-Component: OSGI-INF/org.wso2.carbon.greeting.card.producer.inter
- nal.GreedingCardProducerServiceComponent.xml
+ nal.GreetingCardProducerServiceComponent.xml
 Tool: Bnd-2.1.0.20130426-122213
