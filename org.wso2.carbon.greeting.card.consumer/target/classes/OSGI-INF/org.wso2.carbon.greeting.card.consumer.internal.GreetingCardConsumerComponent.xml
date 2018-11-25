@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="greeting.card.consumer" activate="activate">
-    <reference name="greeting.card.producer" interface="org.wso2.carbon.greeting.card.producer.GreetingCardProducer" cardinality="1..1" policy="dynamic" bind="setGreetingCardProducer" unbind="unsetGreetingCardProducer"/>
-    <implementation class="org.wso2.carbon.greeting.card.consumer.internal.GreetingCardConsumerComponent"/>
-</scr:component>
