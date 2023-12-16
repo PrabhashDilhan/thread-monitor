@@ -19,7 +19,7 @@ jobs:
           echo "Assignees: " ${{ join(github.event.issue.assignees.*.login) }}
     - name: Google Chat Notification
       run: |
-          curl --location --request POST '${{ secrets.WEBHOOK }}' \
+          curl --location --request POST '${{ secrets.WEBHOOK2 }}' \
           --header 'Content-Type: application/json' \
           --data-raw '{
               "cards": [
