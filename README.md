@@ -172,6 +172,6 @@ Stack trace:
 - Java Management Extensions (JMX) for thread monitoring
 - Apache HTTP Components for REST API
 
-## License
+## Deploy into the WSO2 server
 
-This project is licensed under the Apache License 2.0. 
+To deploy this into the WSO2 servers, you just need to build and copy the OSGi bundle into the /dropins directory. Then we can use the REST API to start/stop the monitoring service. Once you deployed the bundle into the osgi, the rest server runs on port 8888. 
