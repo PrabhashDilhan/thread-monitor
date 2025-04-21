@@ -92,13 +92,35 @@ public class ThreadMonitor {
             if (samples.size() >= sampleCount) {
                 logProblematicThread(threadInfo, samples);
                 problematicThreads.remove(threadId);
-                threadStateInfo.remove(threadId);
             }
         }
 
-        // Remove threads that are no longer problematic
-        problematicThreads.keySet().removeIf(threadId -> !currentProblematicThreads.containsKey(threadId));
-        threadStateInfo.keySet().removeIf(threadId -> !currentProblematicThreads.containsKey(threadId));
+        // For pool threads, we need to handle state transitions differently
+        for (ThreadInfo threadInfo : allThreads) {
+            if (threadInfo != null && threadInfo.getThreadName().startsWith(threadNamePrefix)) {
+                long threadId = threadInfo.getThreadId();
+                Thread.State state = threadInfo.getThreadState();
+                
+                // If thread is in RUNNABLE state, update or create state info
+                if (state.equals(Thread.State.RUNNABLE)) {
+                    ThreadStateInfo currentState = threadStateInfo.get(threadId);
+                    if (currentState == null) {
+                        threadStateInfo.put(threadId, new ThreadStateInfo(
+                            System.currentTimeMillis(),
+                            threadInfo.getLockName(),
+                            threadInfo.getLockOwnerId()
+                        ));
+                    }
+                }
+                // If thread is in WAITING/TIMED_WAITING and the method is park, reset the state
+                else if ((state.equals(Thread.State.WAITING) || state.equals(Thread.State.TIMED_WAITING)) &&
+                         threadInfo.getStackTrace().length > 0 &&
+                         "park".equals(threadInfo.getStackTrace()[0].getMethodName())) {
+                    // This is normal parking state for pool threads, reset the tracking
+                    threadStateInfo.remove(threadId);
+                }
+            }
+        }
     }
 
     private boolean isProblematic(ThreadInfo threadInfo) {
@@ -119,30 +141,30 @@ public class ThreadMonitor {
         
         // Check for long-running RUNNABLE state
         if (state.equals(Thread.State.RUNNABLE)) {
-            ThreadStateInfo currentState = new ThreadStateInfo(
-                currentTime,
-                threadInfo.getLockName(),
-                threadInfo.getLockOwnerId()
-            );
+            ThreadStateInfo currentState = threadStateInfo.get(threadId);
             
-            ThreadStateInfo previousState = threadStateInfo.get(threadId);
-            
-            if (previousState == null) {
+            if (currentState == null) {
                 // First time seeing this thread in RUNNABLE state
-                threadStateInfo.put(threadId, currentState);
+                threadStateInfo.put(threadId, new ThreadStateInfo(currentTime, threadInfo.getLockName(), threadInfo.getLockOwnerId()));
                 return false;
             }
             
             // Check if thread has been in RUNNABLE state for too long
-            if (currentTime - previousState.startTime > runnableThreshold) {
+            if (currentTime - currentState.startTime > runnableThreshold) {
                 // Check if it's holding the same lock or if other threads are waiting for its locks
-                if (isHoldingSameLock(previousState, currentState) || isHoldingContendedLocks(threadInfo)) {
+                if (isHoldingSameLock(currentState, new ThreadStateInfo(currentTime, threadInfo.getLockName(), threadInfo.getLockOwnerId())) || 
+                    isHoldingContendedLocks(threadInfo)) {
                     return true;
                 }
             }
             
-            // Update the state info
-            threadStateInfo.put(threadId, currentState);
+            // If thread is holding a lock, consider it problematic if it's been in RUNNABLE state too long
+            if (threadInfo.getLockName() != null && currentTime - currentState.startTime > runnableThreshold) {
+                return true;
+            }
+        } else {
+            // If thread is not in RUNNABLE state, remove it from tracking
+            threadStateInfo.remove(threadId);
         }
         
         return false;
