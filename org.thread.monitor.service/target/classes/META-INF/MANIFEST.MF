@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1745223061547
+Build-Jdk: 11.0.19
+Built-By: prabhash
+Bundle-ManifestVersion: 2
+Bundle-Name: org.thread.monitor.service
+Bundle-SymbolicName: org.thread.monitor.service
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: org.thread.monitor.service;version="1.0.0.SNAPSHOT"
+Import-Package: org.osgi.service.component;version="[1.2.0,2.0.0)",org.o
+ sgi.framework;version="[1.7.0,2.0.0)"
+Service-Component: OSGI-INF/org.thread.monitor.service.internal.ThreadMo
+ nitorComponent.xml
+Tool: Bnd-2.1.0.20130426-122213

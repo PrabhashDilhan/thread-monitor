@@ -5,15 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.wso2.carbon</groupId>
-    <artifactId>greeting-card-manager</artifactId>
+    <artifactId>thread-monitor</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>org.wso2.carbon.greeting.card.producer</module>
-        <module>org.wso2.carbon.greeting.card.consumer</module>
+        <module>org.thread.monitor.service</module>
     </modules>
-
     <packaging>pom</packaging>
-    <name>WSO2 Carbon-Greeting Card Manager</name>
+    <name>WSO2 thread monitor service</name>
 
     <repositories>
         <!-- Below configuration is used to download the relevant jars and plugins from the remote maven repositories -->
@@ -80,6 +78,21 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <basedir/>
+                    <mainOutputDirectory/>
+                    <mojoStatusPath/>
+                    <outputDirectory/>
+                    <projectArtifact/>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
 
@@ -102,9 +115,14 @@
                 <version>${eclipse.osgi.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon</groupId>
-                <artifactId>org.wso2.carbon.greeting.card.producer</artifactId>
-                <version>${project.version}</version>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons.logging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>4.4.16</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -117,5 +135,6 @@
         <eclipse.osgi.version>3.9.1.v20130814-1242</eclipse.osgi.version>
         <maven.scr.plugin.version>1.24.0</maven.scr.plugin.version>
         <maven.bundle.plugin.version>2.4.0</maven.bundle.plugin.version>
+        <commons.logging.version>1.1.1</commons.logging.version>
     </properties>
 </project>
