@@ -1,8 +1,0 @@
-org/thread/monitor/service/ThreadMonitorServer.class
-org/thread/monitor/service/ThreadMonitor$ThreadStateInfo.class
-org/thread/monitor/service/ThreadMonitorServer$1.class
-org/thread/monitor/service/ThreadMonitorServer$StartMonitorHandler.class
-org/thread/monitor/service/ThreadMonitor.class
-org/thread/monitor/service/internal/ThreadMonitorComponent.class
-org/thread/monitor/service/ThreadMonitorServer$StopMonitorHandler.class
-org/thread/monitor/service/ThreadMonitorServer$StatusHandler.class
