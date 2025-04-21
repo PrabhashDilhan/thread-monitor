@@ -174,4 +174,4 @@ Stack trace:
 
 ## Deploy into the WSO2 server
 
-To deploy this into the WSO2 servers, you just need to build and copy the OSGi bundle into the /dropins directory. Then we can use the REST API to start/stop the monitoring service. 
+To deploy this into the WSO2 servers, you just need to build and copy the OSGi bundle into the /dropins directory. Then we can use the REST API to start/stop the monitoring service. Once you deployed the bundle into the osgi, the rest server runs on port 8888. 
